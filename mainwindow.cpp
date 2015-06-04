@@ -64,7 +64,7 @@ void MainWindow::enumFileType(const QString& path)
     bool bIsDir;
     do{
        QFileInfo fileInfo = list.at(i);
-       if(fileInfo.fileName()=="."|fileInfo.fileName()=="..")
+       if(fileInfo.fileName()=="."||fileInfo.fileName()=="..")
        {
             i++;
            continue;
@@ -124,7 +124,7 @@ void MainWindow::transform(const QString& curr_folder,const QString& tar_folder)
     bool bIsDir;
     do{
        QFileInfo fileInfo = list.at(i);
-       if(fileInfo.fileName()=="."|fileInfo.fileName()=="..")
+       if(fileInfo.fileName()=="."||fileInfo.fileName()=="..")
        {
             i++;
            continue;
