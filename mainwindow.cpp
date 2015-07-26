@@ -5,6 +5,7 @@
 #include <QCheckBox>
 #include <QTextStream>
 #include <QMessageBox>
+#include <algorithm>
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -41,14 +42,20 @@ void MainWindow::on_pushButton_clicked()
    enumFileType(folder);
 
    int n = set.size();
-   int i = 0;
-   for(auto &box : set)
-   {
-       QCheckBox* b = new QCheckBox(box);
-       checkboxs.push_back(b);
-       ui->type_layout->addWidget(b,i/4,i%4);
-       i++;
+   QVector<QString> vec;
+   for(auto s: set)
+       vec.push_back(s);
+   std::sort(vec.begin(),vec.end(),[](const QString& a,const QString& b){return a.size() < b.size();});
 
+   int i = 0;
+   for(auto &str : vec)
+   {
+       QCheckBox* b = new QCheckBox(str);
+       if(str == "c" || str == "cpp" || str == "h" || str == "hpp")
+           b->setChecked(true);
+       checkboxs.push_back(b);
+       ui->type_layout->addWidget(b,i/8,i%8);
+       i++;
    }
 }
 void MainWindow::enumFileType(const QString& path)
