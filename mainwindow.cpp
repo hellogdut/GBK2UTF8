@@ -6,6 +6,7 @@
 #include <QTextStream>
 #include <QMessageBox>
 #include <algorithm>
+#include <QDesktopServices>
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -117,6 +118,7 @@ void MainWindow::on_pushButton_2_clicked()
 
     transform(folder,tar_folder);
     QMessageBox::about(this,"提示","转换成功");
+
 }
 void MainWindow::transform(const QString& curr_folder,const QString& tar_folder)
 {
@@ -187,5 +189,12 @@ void MainWindow::transform(const QString& curr_folder,const QString& tar_folder)
        }
        i++;
     }while(i<list.size());
+    ui->pushButton_3->setEnabled(true);
+}
 
+void MainWindow::on_pushButton_3_clicked()
+{
+    QString path = folder;
+    path = QString(folder.begin(),folder.lastIndexOf("/"));
+    QDesktopServices::openUrl(QUrl::fromLocalFile(path));
 }
